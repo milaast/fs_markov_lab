@@ -2,6 +2,7 @@
 
 
 from random import choice
+from sys import argv
 
 
 def open_and_read_file(file_path):
@@ -63,8 +64,13 @@ def make_text(chains):
     words = []
 
 
-    current_key = choice(chains.keys())
+    while True:
+
+        current_key = choice(chains.keys())
         # random key from chains.keys()
+        if current_key[0][0].isupper():
+            break
+
     words.append(current_key[0])
     words.append(current_key[1])
 
@@ -77,14 +83,16 @@ def make_text(chains):
 
         words.append(current_key[1])
 
-        if new_key not in chains.keys():
+        # if new_key not in chains.keys():
+        #     break
+        if new_key[1][-1] in ['.', '?', '!']:
             break
 
 
     return " ".join(words)
 
 
-input_path = "green-eggs.txt"
+input_path = argv[1]
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
