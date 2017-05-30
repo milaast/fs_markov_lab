@@ -63,14 +63,18 @@ def make_text(chains):
     words = []
 
 
-    current_key = choice(chains.keys()) # random key from chains.keys()
+    current_key = choice(chains.keys())
+        # random key from chains.keys()
     words.append(current_key[0])
-    
+    words.append(current_key[1])
+
     while True:
-        
-        chosen_word = choice(chains[current_key]) # random word from chains[current_key]
+
+        chosen_word = choice(chains[current_key]) 
+            # random word from chains[current_key]
         new_key = (current_key[1], chosen_word)
         current_key = new_key
+
         words.append(current_key[1])
 
         if new_key not in chains.keys():
