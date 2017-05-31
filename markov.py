@@ -63,7 +63,6 @@ def make_text(chains):
 
     words = []
 
-
     while True:
 
         current_key = choice(chains.keys())
@@ -71,8 +70,7 @@ def make_text(chains):
         if current_key[0][0].isupper():
             break
 
-    words.append(current_key[0])
-    words.append(current_key[1])
+    words.extend(list(current_key))
 
     while True:
 
@@ -83,11 +81,8 @@ def make_text(chains):
 
         words.append(current_key[1])
 
-        # if new_key not in chains.keys():
-        #     break
-        if new_key[1][-1] in ['.', '?', '!']:
+        if new_key[-1][-1] in ['.', '?', '!']:
             break
-
 
     return " ".join(words)
 
