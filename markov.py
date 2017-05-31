@@ -14,11 +14,10 @@ def open_and_read_file():
 
     file_paths = argv[1:]
     text = ""
+
     for file_path in file_paths:
         with open(file_path) as f:
-        
             text += f.read()
-        # f.close()
 
     return text
 
@@ -63,7 +62,6 @@ def make_chains(text, n):
 
         chains[key].append(value)
 
-
     return chains
 
 
@@ -99,12 +97,7 @@ def make_text(chains):
     return " ".join(words)
 
 
-# input_path = argv[1:]
-
 # Open the file and turn it into one long string
-
-# for arg in input_path:
-
 input_text = open_and_read_file()
 
 # Get a Markov chain
