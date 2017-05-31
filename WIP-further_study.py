@@ -78,22 +78,13 @@ def make_text(chains):
     while True:
 
         chosen_word = choice(chains[current_key])
-        # print "TYPE CK", type(current_key)
-        # print "COSEN WORD", chosen_word
             # random word from chains[current_key]
-            # ?.append(chosen_word)
+
         new_key = list(current_key[1:]) + [chosen_word]
 
-        # print "NEW KEY", new_key + [chosen_word]
-        # print "TYPE NK", type(new_key)
-        ## new_key = new_key 
         new_key = tuple(new_key)
-        # print "TYPE NK", type(new_key)
         current_key = new_key
-        # current_key = tuple(current_key)
 
-        # print "CURRENT KEY", current_key
-        # break
         words.append(current_key[-1])
 
         if new_key[-1][-1] in ['.', '?', '!']:
