@@ -1,6 +1,3 @@
-"""Generate markov text from text files."""
-
-
 from random import choice
 from sys import argv
 
@@ -19,7 +16,8 @@ def open_and_read_file(file_path):
     return text
 
 
-def make_chains(text):
+
+def make_chains(text, n): # n = n_gram
     """Takes input text as string; returns dictionary of markov chains.
 
     A chain will be a key that consists of a tuple of (word1, word2)
@@ -45,46 +43,49 @@ def make_chains(text):
 
     words = text.split()
 
-    for i in range(len(words) - 2):
+    for i in range(len(words) - n): # 'n' instead of 2 (number of items in tuple) 
 
-        key = (words[i], words[i + 1])
-        value = words[i + 2]
+        key = tuple(words[i:i + n]) # sub num by 'n'
+            # slice of the list from tuple(list[i : i + n])
+        
+        value = words[i + n]
+            # words[i + n]
 
         if key not in chains:
             chains[key] = []
 
         chains[key].append(value)
 
+    print chains
     return chains
 
+# def make_text(chains):
+#     """Returns text from chains."""
 
-def make_text(chains):
-    """Returns text from chains."""
+#     words = []
 
-    words = []
+#     while True:
 
-    while True:
-                                            # repeat until
-        current_key = choice(chains.keys())
-        # random key from chains.keys()
-        if current_key[0][0].isupper():
-            break
+#         current_key = choice(chains.keys())
+#         # random key from chains.keys()
+#         if current_key[0][0].isupper():
+#             break
 
-    words.extend(list(current_key))
+#     words.extend(list(current_key))
 
-    while True:
+#     while True:
 
-        chosen_word = choice(chains[current_key]) 
-            # random word from chains[current_key]
-        new_key = (current_key[1], chosen_word)
-        current_key = new_key
+#         chosen_word = choice(chains[current_key]) 
+#             # random word from chains[current_key]
+#         new_key = (current_key[-1], chosen_word)
+#         current_key = new_key
 
-        words.append(current_key[1])
+#         words.append(current_key[-1])
 
-        if new_key[-1][-1] in ['.', '?', '!']:
-            break
+#         if new_key[-1][-1] in ['.', '?', '!']:
+#             break
 
-    return " ".join(words)
+#     return " ".join(words)
 
 
 input_path = argv[1]
@@ -93,9 +94,9 @@ input_path = argv[1]
 input_text = open_and_read_file(input_path)
 
 # Get a Markov chain
-chains = make_chains(input_text)
+chains = make_chains(input_text, 3)
 
 # # Produce random text
-random_text = make_text(chains)
+# random_text = make_text(chains)
 
-print random_text
+# print random_text
