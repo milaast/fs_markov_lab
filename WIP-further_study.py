@@ -16,8 +16,8 @@ def open_and_read_file(file_path):
     return text
 
 
-
-def make_chains(text, n): # n = n_gram
+# n = n_gram
+def make_chains(text, n):
     """Takes input text as string; returns dictionary of markov chains.
 
     A chain will be a key that consists of a tuple of (word1, word2)
@@ -43,11 +43,12 @@ def make_chains(text, n): # n = n_gram
 
     words = text.split()
 
-    for i in range(len(words) - n): # 'n' instead of 2 (number of items in tuple) 
+    # 'n' instead of 2 (number of items in tuple)
+    for i in range(len(words) - n):
+        # sub num by 'n'
+        # slice of the list from tuple(list[i : i + n])
+        key = tuple(words[i:i + n])
 
-        key = tuple(words[i:i + n]) # sub num by 'n'
-            # slice of the list from tuple(list[i : i + n])
-        
         value = words[i + n]
             # words[i + n]
 
@@ -56,36 +57,49 @@ def make_chains(text, n): # n = n_gram
 
         chains[key].append(value)
 
-    print chains
+
     return chains
 
-# def make_text(chains):
-#     """Returns text from chains."""
 
-#     words = []
+def make_text(chains):
+    """Returns text from chains."""
 
-#     while True:
+    words = []
 
-#         current_key = choice(chains.keys())
-#         # random key from chains.keys()
-#         if current_key[0][0].isupper():
-#             break
+    while True:
 
-#     words.extend(list(current_key))
+        current_key = choice(chains.keys())
+        # random key from chains.keys()
+        if current_key[0][0].isupper():
+            break
 
-#     while True:
+    words.extend(list(current_key))
 
-#         chosen_word = choice(chains[current_key]) 
-#             # random word from chains[current_key]
-#         new_key = (current_key[-1], chosen_word)
-#         current_key = new_key
+    while True:
 
-#         words.append(current_key[-1])
+        chosen_word = choice(chains[current_key])
+        # print "TYPE CK", type(current_key)
+        # print "COSEN WORD", chosen_word
+            # random word from chains[current_key]
+            # ?.append(chosen_word)
+        new_key = list(current_key[1:]) + [chosen_word]
 
-#         if new_key[-1][-1] in ['.', '?', '!']:
-#             break
+        # print "NEW KEY", new_key + [chosen_word]
+        # print "TYPE NK", type(new_key)
+        ## new_key = new_key 
+        new_key = tuple(new_key)
+        # print "TYPE NK", type(new_key)
+        current_key = new_key
+        # current_key = tuple(current_key)
 
-#     return " ".join(words)
+        # print "CURRENT KEY", current_key
+        # break
+        words.append(current_key[-1])
+
+        if new_key[-1][-1] in ['.', '?', '!']:
+            break
+
+    return " ".join(words)
 
 
 input_path = argv[1]
@@ -95,8 +109,8 @@ input_text = open_and_read_file(input_path)
 
 # Get a Markov chain
 chains = make_chains(input_text, 3)
+# print chains
+# Produce random text
+random_text = make_text(chains)
 
-# # Produce random text
-# random_text = make_text(chains)
-
-# print random_text
+print random_text
